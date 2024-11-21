@@ -13,10 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String   @id @default(uuid())
+  username String
+  email    String   @unique
+  folders  Folder[]
+}
+
+model Folder {
+  id      String @id @default(uuid())
+  name    String
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId String
+  files   File[]
+}
+
+model File {
+  id     String @id @default(uuid())
+  name   String
+  folder Folder @relation(fields: [folderId], references: [id])
+  folderId String
+}
+
 // Session table for express session
 model Session {
   id        String   @id
   sid       String   @unique
   data      String
-  expiresAt   DateTime
+  expiresAt DateTime
 }
