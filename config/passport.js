@@ -4,11 +4,6 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient({log: ['query']})
 
-const customFields = {
-  usernameField: 'uname',
-  passwordField: 'pw'
-}
-
 const verifyCallback = async (username, password, done) => {
   try {
     const user = await prisma.user.findFirst({

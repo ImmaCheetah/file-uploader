@@ -33,6 +33,7 @@ model File {
   name   String
   folder Folder @relation(fields: [folderId], references: [id])
   folderId String
+  filePath String
 }
 
 // Session table for express session

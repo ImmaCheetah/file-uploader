@@ -12,8 +12,6 @@ const expressSession = require('express-session');
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient({log: ['query']})
-
 // Initialize app
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -54,21 +52,3 @@ app.get("/", indexRouter);
 
 app.listen(process.env.PORT, () => console.log('App running on port', PORT));
 
-async function main() {
-  // const session = prisma.session.findFirst({
-  //   include: {
-  //     cookie: true
-  //   }
-  // })
-  // console.log(session)
-}
-
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
