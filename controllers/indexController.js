@@ -1,7 +1,7 @@
 const db = require('../db/queries')
 
 async function getIndexPage(req, res, next) {
-  if (!req.session.user) {
+  if (!req.user) {
     res.redirect('/login')
   } else {
     res.send('hello');
