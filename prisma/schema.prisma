@@ -15,8 +15,9 @@ datasource db {
 
 model User {
   id       String   @id @default(uuid())
-  username String
+  username String   @unique
   email    String   @unique
+  password String
   folders  Folder[]
 }
 
@@ -29,9 +30,9 @@ model Folder {
 }
 
 model File {
-  id     String @id @default(uuid())
-  name   String
-  folder Folder @relation(fields: [folderId], references: [id])
+  id       String @id @default(uuid())
+  name     String
+  folder   Folder @relation(fields: [folderId], references: [id])
   folderId String
   filePath String
 }

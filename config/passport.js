@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { PrismaClient } = require('@prisma/client')
@@ -11,14 +12,18 @@ const verifyCallback = async (username, password, done) => {
         username
       }
     });
-  
-    if (!user) {
-      return done(null, false, { message: "Incorrect username" });
+    console.log(user)
+    
+    const match = await bcrypt.compare(password, user.password);
+    console.log(match);
+    if (match) {
+      console.log('passwords matched');
+      return done(null, user);
+    } else {
+      // passwords do not match!
+      return done(null, false, { message: "Incorrect password" })
     }
-    if (user.password !== password) {
-      return done(null, false, { message: "Incorrect password" });
-    }
-    return done(null, user);
+    
   } catch (error) {
     return done(error);
   }
