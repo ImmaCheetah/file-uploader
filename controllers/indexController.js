@@ -2,7 +2,7 @@ const db = require('../db/queries')
 
 async function getIndexPage(req, res, next) {
   res.send('hello');
-  console.log(req.session);
+  // console.log(req.session);
 }
 
 
