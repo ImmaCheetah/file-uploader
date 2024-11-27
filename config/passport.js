@@ -3,7 +3,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { PrismaClient } = require('@prisma/client')
 
-const prisma = new PrismaClient({log: ['query']})
+const prisma = new PrismaClient()
 
 const verifyCallback = async (username, password, done) => {
   try {
