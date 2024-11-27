@@ -1,6 +1,4 @@
 const db = require('../db/queries');
-// const multer  = require('multer')
-// const upload = multer({ dest: 'files/' })
 
 async function getIndexPage(req, res, next) {
   if (!req.user) {

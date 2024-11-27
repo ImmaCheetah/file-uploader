@@ -99,12 +99,12 @@ textarea:not([rows]) {
 :target {
   scroll-margin-block: 5ex;
 }
-
+/* 
 button:active {
   box-shadow: none;
   transform: translateY(4px) translateX(4px);
   transition: 100ms ease-in-out;
-}
+} */
 
 
 input::-webkit-outer-spin-button,
@@ -116,4 +116,39 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+
+body {
+  display: flex;
+  background-color: antiquewhite;
+}
+
+aside {
+  width: 15rem;
+  background-color: rgb(199, 199, 199);
+  height: 100vh;
+  padding: 1rem;
+}
+
+.sidebar-title {
+  margin-bottom: 1rem;
+}
+
+.folders-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+  z-index: 1; 
+  width: 15rem; 
+  height: 10rem; 
+  background-color: rgb(173, 173, 173); /* Fallback color */
 }

@@ -16,7 +16,7 @@ const { PrismaClient } = require('@prisma/client');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Path to css file
+// Path to public folder
 const assetsPath = path.join(__dirname, "/public");
 
 // Routers

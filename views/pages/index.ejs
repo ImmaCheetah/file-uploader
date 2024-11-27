@@ -3,12 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/modal.js" defer></script>
   <title>Document</title>
 </head>
 <body>
+  <aside>
+    <h1 class="sidebar-title">App Name</h1>
+    <div class="folders-div">
+      <button class="new-folder-btn">New Folder</button>
+      <a href="/">Home</a>
+      <a href="/">Home</a>
+      <a href="/">Home</a>
+      <a href="/">Home</a>
+    </div>
+  </aside>
+  <main>
     <form action="/" method="POST" enctype="multipart/form-data">
       <input type="file" name="file">
       <button type="submit">Upload</button>
     </form>
+    <div class="modal">
+      <form action="/">
+        <label for="folderName">Folder Name</label>
+        <input type="text" name="folderName">
+        <button type="submit">Add</button>
+        <button type="button" class="close-modal-btn">Close</button>
+      </form>
+    </div>
+  </main>
 </body>
 </html>
