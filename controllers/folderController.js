@@ -1,5 +1,14 @@
 const db = require('../db/queries');
 
+async function getFolderPage(req, res, next) {
+  try {
+    const folder = await db.getFolder(req.params.id);
+    res.render('folder', {folder: folder})
+  } catch (error) {
+    
+  }
+}
+
 async function createFolder(req, res, next) {
   try {
     const {folderName} = req.body;
@@ -13,5 +22,6 @@ async function createFolder(req, res, next) {
 }
 
 module.exports = {
+  getFolderPage,
   createFolder
 }

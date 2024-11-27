@@ -6,6 +6,16 @@ async function getAllFolders() {
   return folders;
 }
 
+async function getFolder(id) {
+  const folder = await prisma.folder.findFirst({
+    where: {
+      id: id,
+    }
+  });
+
+  return folder;
+}
+
 async function addUser(username, email, password) {
   const user = await prisma.user.create({
     data: {
@@ -35,6 +45,7 @@ async function addFolder(name, ownerId) {
 
 module.exports = {
   getAllFolders,
+  getFolder,
   addUser,
   addFolder
 }

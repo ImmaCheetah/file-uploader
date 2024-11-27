@@ -5,7 +5,7 @@ const passport = require('passport');
 const multer  = require('multer')
 const upload = multer({ dest: 'files/' })
 
-// folderRouter.get('/:id', folderController.getIndexPage);
+folderRouter.get('/:id', folderController.getFolderPage);
 
 folderRouter.post('/new', folderController.createFolder);
 
