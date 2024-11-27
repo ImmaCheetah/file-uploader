@@ -4,9 +4,8 @@ async function createFolder(req, res, next) {
   try {
     const {folderName} = req.body;
 
-    console.log('ASDJKLHASDHJKGHASHJ')
-    const folder = await db.addFolder(folderName, req.user.id);
-    console.log('AAAAAAA',folder)
+    await db.addFolder(folderName, req.user.id);
+
     res.redirect('/');
   } catch (error) {
     console.log(error);

@@ -1,5 +1,11 @@
 const prisma = require('./prisma');
 
+async function getAllFolders() {
+  const folders = await prisma.folder.findMany();
+
+  return folders;
+}
+
 async function addUser(username, email, password) {
   const user = await prisma.user.create({
     data: {
@@ -9,7 +15,7 @@ async function addUser(username, email, password) {
     }
   })
 
-  console.log(user);
+  return user;
 }
 
 async function addFolder(name, ownerId) {
@@ -24,11 +30,11 @@ async function addFolder(name, ownerId) {
     }
   })
 
-  console.log('This is the folder', folder);
-  console.log(ownerId);
+  return folder;
 }
 
 module.exports = {
+  getAllFolders,
   addUser,
   addFolder
 }
