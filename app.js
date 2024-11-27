@@ -3,6 +3,8 @@ require('dotenv').config();
 // Need to require the entire Passport config module so app.js knows about it
 require('./config/passport');
 
+const db = require('./db/queries');
+
 const express = require('express');
 const passport = require('passport');
 const path = require("node:path");
@@ -24,6 +26,14 @@ const indexRouter = require('./routes/indexRouter');
 const loginRouter = require('./routes/loginRouter');
 const signUpRouter = require('./routes/signUpRouter');
 const folderRouter = require('./routes/folderRouter');
+
+async function fetchFolders(req, res, next) {
+  const folders = await db.getAllFolders();
+  res.locals.folders = folders;
+  next();
+}
+
+app.use(fetchFolders);
 
 app.set("views", path.join(__dirname, "views/pages"));
 app.set("view engine", "ejs");

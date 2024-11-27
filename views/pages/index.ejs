@@ -8,15 +8,7 @@
   <title>Document</title>
 </head>
 <body>
-  <aside>
-    <h1 class="sidebar-title">App Name</h1>
-    <div class="folders-div">
-      <button class="new-folder-btn">New Folder</button>
-      <% folders.forEach(folder => { %>
-        <a href=folder/<%= folder.id %>><%= folder.name %> </a>
-      <% }) %>
-    </div>
-  </aside>
+  <%- include('../partials/sidebar') %>
   <main>
     <form action="/" method="POST" enctype="multipart/form-data">
       <input type="file" name="file">
