@@ -7,6 +7,7 @@ const upload = multer({ dest: 'files/' })
 
 folderRouter.get('/:id', folderController.getFolderPage);
 
+folderRouter.post('/:id', folderController.deleteFolder);
 folderRouter.post('/new', folderController.createFolder);
 
 module.exports = folderRouter;

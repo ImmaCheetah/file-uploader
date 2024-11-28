@@ -152,3 +152,8 @@ aside {
   height: 10rem; 
   background-color: rgb(173, 173, 173); /* Fallback color */
 }
+
+.sidebar-folder-div {
+  display: flex;
+  justify-content: space-between;
+}
