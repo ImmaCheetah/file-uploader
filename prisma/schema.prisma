@@ -19,6 +19,7 @@ model User {
   email    String   @unique
   password String
   folders  Folder[]
+  File     File[]
 }
 
 model Folder {
@@ -30,11 +31,14 @@ model Folder {
 }
 
 model File {
-  id       String @id @default(uuid())
-  name     String
-  folder   Folder @relation(fields: [folderId], references: [id])
-  folderId String
-  filePath String
+  id          String   @id @default(uuid())
+  name        String
+  folder      Folder   @relation(fields: [folderId], references: [id])
+  folderId    String
+  filePath    String
+  fileOwner   User     @relation(fields: [fileOwnerId], references: [id])
+  fileOwnerId String
+  uploadedAt  DateTime @default(now())
 }
 
 // Session table for express session

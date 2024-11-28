@@ -26,6 +26,7 @@ const indexRouter = require('./routes/indexRouter');
 const loginRouter = require('./routes/loginRouter');
 const signUpRouter = require('./routes/signUpRouter');
 const folderRouter = require('./routes/folderRouter');
+const fileRouter = require('./routes/fileRouter');
 
 async function fetchFolders(req, res, next) {
   const folders = await db.getAllFolders();
@@ -71,6 +72,7 @@ app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/sign-up", signUpRouter);
 app.use("/folder", folderRouter);
+app.use("/file", fileRouter);
 
 app.listen(process.env.PORT, () => console.log('App running on port', PORT));
 

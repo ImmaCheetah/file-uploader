@@ -10,13 +10,6 @@ async function getIndexPage(req, res, next) {
   // console.log(req.session);
 }
 
-async function uploadFile(req, res, next) {
-  res.send('done did it');
-  console.log('This is the file', req.file);
-}
-
-
 module.exports = {
   getIndexPage,
-  uploadFile
 }

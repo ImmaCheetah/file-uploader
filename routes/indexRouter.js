@@ -7,6 +7,6 @@ const upload = multer({ dest: 'files/' })
 
 indexRouter.get('/', indexController.getIndexPage);
 
-indexRouter.post('/', upload.single('file'), indexController.uploadFile);
+// indexRouter.post('/:folderId', upload.single('file'), indexController.uploadFile);
 
 module.exports = indexRouter;
