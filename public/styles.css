@@ -140,7 +140,7 @@ aside {
   flex-direction: column;
 }
 
-.modal {
+.modal, .folder-rename-modal {
   display: none;
   position: absolute;
   top: 50%;
@@ -152,6 +152,8 @@ aside {
   height: 10rem; 
   background-color: rgb(173, 173, 173); /* Fallback color */
 }
+
+
 
 .sidebar-folder-div {
   display: flex;

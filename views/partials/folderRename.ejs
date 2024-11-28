@@ -1,0 +1,10 @@
+<html>
+  <div class="folder-rename-modal">
+    <form action="/folder/update/<%= folder.id %>" method="POST">
+      <label for="folderName">Folder Name</label>
+      <input type="text" name="folderName" value="<%= folder.name %>">
+      <button type="submit">Update</button>
+      <button type="button" class="update-close-modal-btn">Close</button>
+    </form>
+  </div>
+</html>

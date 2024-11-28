@@ -43,6 +43,17 @@ async function addFolder(name, ownerId) {
   return folder;
 }
 
+async function updateFolder(folderId, newName) {
+  await prisma.folder.update({
+    where: {
+      id: folderId
+    },
+    data: {
+      name: newName,
+    }
+  })
+}
+
 async function deleteFolder(folderId) {
   const folder = await prisma.folder.delete({
     where: {
@@ -56,5 +67,6 @@ module.exports = {
   getFolder,
   addUser,
   addFolder,
+  updateFolder,
   deleteFolder
 }

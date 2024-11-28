@@ -5,6 +5,7 @@
   <%- include('../partials/sidebar') %>
   <main>
     <h1><%= locals.folder.name %></h1>
+    <button class="folder-update-btn">Update</button>
     <form action="/" method="POST" enctype="multipart/form-data">
       <input type="file" name="file">
       <button type="submit">Upload</button>
@@ -17,6 +18,7 @@
         <button type="button" class="close-modal-btn">Close</button>
       </form>
     </div>
+    <%- include('../partials/folderRename') %>
   </main>
 </body>
 </html>

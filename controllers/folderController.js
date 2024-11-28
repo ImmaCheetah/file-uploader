@@ -21,6 +21,18 @@ async function createFolder(req, res, next) {
   }
 }
 
+async function updateFolder(req, res, next) {
+  try {
+    const {folderName} = req.body;
+
+    await db.updateFolder(req.params.id, folderName)
+
+    res.redirect('/');
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function deleteFolder(req, res, next) {
   try {
     await db.deleteFolder(req.body.folderId)
@@ -34,5 +46,6 @@ async function deleteFolder(req, res, next) {
 module.exports = {
   getFolderPage,
   createFolder,
+  updateFolder,
   deleteFolder,
 }
