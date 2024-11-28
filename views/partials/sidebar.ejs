@@ -5,7 +5,7 @@
       <button class="new-folder-btn">New Folder</button>
       <a href="/">Home</a>
       <% folders.forEach(folder => { %>
-        <form class="sidebar-folder-div" action="/folder/<%= folder.id %>" method="POST">
+        <form class="sidebar-folder-div" action="/folder/delete/<%= folder.id %>" method="POST">
           <a href=/folder/<%= folder.id %>><%= folder.name %></a>
           <button name="folderId" value=<%= folder.id %> type="submit" class="folder-delete-btn">X</button>
         </form>
