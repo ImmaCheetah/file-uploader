@@ -38,12 +38,14 @@ async function updateFolder(req, res, next) {
 
 async function deleteFolder(req, res, next) {
   try {
+    const filesToDelete = await db.getAllFilesInFolder(req.body.folderId);
+    filesToDelete.forEach((file) => {
+      fs.unlink(file.filePath, function (err) {
+        if (err) throw err;
+        console.log('File deleted!');
+      });
+    })
     await db.deleteFolder(req.body.folderId);
-
-    // fs.unlink('files/2b952ac0c0c54c1f2b7274f84a996651', function (err) {
-    //   if (err) throw err;
-    //   console.log('File deleted!');
-    // });
 
     res.redirect('/');
   } catch (error) {
