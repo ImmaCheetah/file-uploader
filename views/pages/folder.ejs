@@ -10,6 +10,11 @@
       <input type="file" name="file">
       <button type="submit">Upload</button>
     </form>
+    <% if (locals.files) { %>
+      <% files.forEach(file => { %>
+        <li><%= file.name %></li>
+      <% }) %>
+    <% } %>
     <div class="modal">
       <form action="/folder/new" method="POST">
         <label for="folderName">Folder Name</label>

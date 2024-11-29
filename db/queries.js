@@ -6,6 +6,24 @@ async function getAllFolders() {
   return folders;
 }
 
+async function getAllFiles() {
+  const files = await prisma.file.findMany();
+
+  return files;
+}
+
+async function getAllFilesInFolder(folderId) {
+  const files = await prisma.file.findMany({
+    where: {
+      folder: {
+        id: folderId
+      }
+    }
+  });
+
+  return files;
+}
+
 async function getFolder(id) {
   const folder = await prisma.folder.findFirst({
     where: {
@@ -84,6 +102,8 @@ async function uploadFile(name, filePath, folderId, ownerId) {
 
 module.exports = {
   getAllFolders,
+  getAllFiles,
+  getAllFilesInFolder,
   getFolder,
   addUser,
   addFolder,

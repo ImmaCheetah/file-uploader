@@ -3,7 +3,9 @@ const db = require('../db/queries');
 async function getFolderPage(req, res, next) {
   try {
     const folder = await db.getFolder(req.params.id);
-    res.render('folder', {folder: folder})
+    const files = await db.getAllFilesInFolder(req.params.id);
+
+    res.render('folder', {folder: folder, files: files})
   } catch (error) {
     console.log(error);
   }
