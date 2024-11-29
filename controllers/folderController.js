@@ -1,4 +1,5 @@
 const db = require('../db/queries');
+const fs = require('fs');
 
 async function getFolderPage(req, res, next) {
   try {
@@ -37,7 +38,12 @@ async function updateFolder(req, res, next) {
 
 async function deleteFolder(req, res, next) {
   try {
-    await db.deleteFolder(req.body.folderId)
+    await db.deleteFolder(req.body.folderId);
+
+    // fs.unlink('files/2b952ac0c0c54c1f2b7274f84a996651', function (err) {
+    //   if (err) throw err;
+    //   console.log('File deleted!');
+    // });
 
     res.redirect('/');
   } catch (error) {

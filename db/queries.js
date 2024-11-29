@@ -73,21 +73,11 @@ async function updateFolder(folderId, newName) {
 }
 
 async function deleteFolder(folderId) {
-  const deleteFiles = prisma.file.deleteMany({
-    where: {
-      folder: {
-        id: folderId
-      }
-    }
-  })
-
-  const deleteFolder = prisma.folder.delete({
+  const deleteFolder = await prisma.folder.delete({
     where: {
       id: folderId,
     }
   })
-
-  const transaction = await prisma.$transaction([deleteFiles, deleteFolder])
 }
 
 async function uploadFile(name, filePath, folderId, ownerId) {
