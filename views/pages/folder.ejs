@@ -10,11 +10,28 @@
       <input type="file" name="file">
       <button type="submit">Upload</button>
     </form>
-    <% if (locals.files) { %>
-      <% files.forEach(file => { %>
-        <li><%= file.name %></li>
-      <% }) %>
-    <% } %>
+    <table>
+      <tr>
+        <th>File Name</th>
+        <th>Owner</th>
+        <th>Date</th>
+        <th>Size</th>
+        <th>Action</th>
+      </tr>
+      <% if (locals.files) { %>
+        <% files.forEach(file => { %>
+          <tr>
+            <td><%= file.name %></td>
+            <td><%= file.fileOwner.username %></td>
+            <td><%= file.uploadedAt %></td>
+            <td><%= file.fileSize %> Bytes</td>
+            <td>
+              <a href="/<%= file.filePath %>">Download</a>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </table>
     <div class="modal">
       <form action="/folder/new" method="POST">
         <label for="folderName">Folder Name</label>

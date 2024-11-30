@@ -18,6 +18,13 @@ async function getAllFilesInFolder(folderId) {
       folder: {
         id: folderId
       }
+    },
+    include: {
+      fileOwner: {
+        select: {
+          username: true
+        }
+      }
     }
   });
 
@@ -80,11 +87,12 @@ async function deleteFolder(folderId) {
   })
 }
 
-async function uploadFile(name, filePath, folderId, ownerId) {
+async function uploadFile(name, filePath, size, folderId, ownerId) {
   const file = await prisma.file.create({
     data: {
       name: name,
       filePath: filePath,
+      fileSize: size,
       folder: {
         connect: {
           id: folderId
@@ -94,7 +102,10 @@ async function uploadFile(name, filePath, folderId, ownerId) {
         connect: {
           id: ownerId
         }
-      }
+      },
+    },
+    include: {
+      fileOwner: true
     }
   })
   return file;
