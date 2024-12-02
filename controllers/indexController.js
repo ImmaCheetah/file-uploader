@@ -4,7 +4,7 @@ async function getIndexPage(req, res, next) {
   if (!req.user) {
     res.redirect('/login')
   } else {
-    const folders = await db.getAllFolders();
+    const folders = await db.getAllFolders(req.user.id);
     res.render('index', {folders: folders});
   }
   // console.log(req.session);

@@ -3,8 +3,8 @@ const fs = require('fs');
 
 async function getFolderPage(req, res, next) {
   try {
-    const folder = await db.getFolder(req.params.id);
-    const files = await db.getAllFilesInFolder(req.params.id);
+    const folder = await db.getFolder(req.user.id, req.params.id);
+    const files = await db.getAllFilesInFolder(req.user.id, req.params.id);
 
     res.render('folder', {folder: folder, files: files})
   } catch (error) {
@@ -38,7 +38,7 @@ async function updateFolder(req, res, next) {
 
 async function deleteFolder(req, res, next) {
   try {
-    const filesToDelete = await db.getAllFilesInFolder(req.body.folderId);
+    const filesToDelete = await db.getAllFilesInFolder(req.user.id, req.body.folderId);
     filesToDelete.forEach((file) => {
       fs.unlink(file.filePath, function (err) {
         if (err) throw err;

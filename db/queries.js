@@ -1,23 +1,34 @@
 const prisma = require('./prisma');
 
-async function getAllFolders() {
-  const folders = await prisma.folder.findMany();
+async function getAllFolders(userId) {
+  const folders = await prisma.folder.findMany({
+    where: {
+      ownerId: userId
+    }
+  });
 
   return folders;
 }
 
-async function getAllFiles() {
-  const files = await prisma.file.findMany();
+async function getAllFiles(userId) {
+  const files = await prisma.file.findMany({
+    where: {
+      fileOwner: {
+        id: userId
+      }
+    }
+  });
 
   return files;
 }
 
-async function getAllFilesInFolder(folderId) {
+async function getAllFilesInFolder(userId, folderId) {
   const files = await prisma.file.findMany({
     where: {
       folder: {
         id: folderId
-      }
+      },
+      fileOwnerId: userId
     },
     include: {
       fileOwner: {
@@ -31,10 +42,11 @@ async function getAllFilesInFolder(folderId) {
   return files;
 }
 
-async function getFolder(id) {
+async function getFolder(userId, folderId) {
   const folder = await prisma.folder.findFirst({
     where: {
-      id: id,
+      id: folderId,
+      ownerId: userId
     }
   });
 

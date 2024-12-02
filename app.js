@@ -29,12 +29,13 @@ const folderRouter = require('./routes/folderRouter');
 const fileRouter = require('./routes/fileRouter');
 
 async function fetchFolders(req, res, next) {
-  const folders = await db.getAllFolders();
-  res.locals.folders = folders;
+  if (req.user) {
+    const folders = await db.getAllFolders(req.user.id);
+    res.locals.folders = folders;
+  }
   next();
 }
 
-app.use(fetchFolders);
 
 app.set("views", path.join(__dirname, "views/pages"));
 app.set("view engine", "ejs");
@@ -42,7 +43,7 @@ app.set("view engine", "ejs");
 app.use(
   expressSession({
     cookie: {
-     maxAge: 7 * 24 * 60 * 60 * 1000 // ms
+      maxAge: 7 * 24 * 60 * 60 * 1000 // ms
     },
     secret: process.env.SECRET,
     resave: false,
@@ -61,10 +62,11 @@ app.use(
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
+app.use(fetchFolders);
 
 app.use((req, res, next) => {
   console.log(req.session);
-  console.log(req.user);
+  console.log('USER ID',req.user);
   next();
 })
 
