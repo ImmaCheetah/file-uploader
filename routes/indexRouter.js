@@ -6,6 +6,7 @@ const multer  = require('multer')
 const upload = multer({ dest: 'files/' })
 
 indexRouter.get('/', indexController.getIndexPage);
+indexRouter.get('/logout', indexController.getLogout)
 
 // indexRouter.post('/:folderId', upload.single('file'), indexController.uploadFile);
 

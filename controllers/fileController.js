@@ -12,6 +12,11 @@ async function uploadFile(req, res, next) {
   }
 }
 
+async function downloadFile(req, res, next) {
+ 
+}
+
 module.exports = {
   uploadFile,
+  downloadFile
 }

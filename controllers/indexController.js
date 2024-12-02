@@ -10,6 +10,16 @@ async function getIndexPage(req, res, next) {
   // console.log(req.session);
 }
 
+function getLogout(req, res, next) {
+  req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
+}
+
 module.exports = {
   getIndexPage,
+  getLogout
 }

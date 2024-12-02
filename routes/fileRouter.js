@@ -6,6 +6,7 @@ const multer  = require('multer')
 const upload = multer({ dest: 'files/' })
 
 // fileRouter.get('/', fileController.getIndexPage);
+fileRouter.get('/download/:fileId', fileController.downloadFile);
 
 fileRouter.post('/:folderId', upload.single('file'), fileController.uploadFile);
 // fileRouter.post('/:folderId', upload.single('file'), fileController.uploadFile);
