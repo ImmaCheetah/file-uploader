@@ -4,33 +4,17 @@ const supabase = require('../db/supabase');
 async function uploadFile(req, res, next) {
   try {
     const {originalname, path, size} = req.file;
-    const file = await db.uploadFile(originalname, path, size, req.params.folderId, req.user.id);
     console.log('REQ FILE', req.file);
-    const uploadFileSupabase = async (bucketName, filePath, fileData) => {
-      try {
-        const { data, error } = await supabase.storage
-          .from(bucketName)
-          .upload(filePath, fileData, {
-            cacheControl: '3600',
-            upsert: false
-          });
-          console.log(`File uploaded to ${filePath}`);
-          console.log(error)
-          console.log(data)
-      } catch (error) {
-        throw error;
-      }
-    };
+    // const file = await db.uploadFile(originalname, path, size, req.params.folderId, req.user.id);
+    const filePath = `/folder/files/${originalname}`;
+    const fileData = req.file.buffer; // Assign your file data to this variable
     
-
-    const filePath = `/folder/files/${file.id + originalname}`;
-    const fileData = file; // Assign your file data to this variable
-    
-    uploadFileSupabase('test', filePath, req.file);
+    supabase.uploadFileToSupabase('test', filePath, fileData);
+    supabase.getFileUrl('test', '4_1730666225096-dog.jpg');
 
 
     res.redirect(`/folder/${req.params.folderId}`);
-    console.log('This is the file', file);
+    // console.log('This is the file', file);
   } catch (error) {
     console.log(error);
   }

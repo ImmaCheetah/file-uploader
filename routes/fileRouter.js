@@ -3,7 +3,8 @@ const fileRouter = Router();
 const fileController = require('../controllers/fileController');
 const passport = require('passport');
 const multer  = require('multer')
-const upload = multer({ dest: 'files/' })
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 // fileRouter.get('/', fileController.getIndexPage);
 fileRouter.get('/download/:fileId', fileController.downloadFile);
