@@ -40,7 +40,7 @@ async function deleteFolder(req, res, next) {
   try {
     const filesToDelete = await db.getAllFilesInFolder(req.user.id, req.body.folderId);
     filesToDelete.forEach((file) => {
-      fs.unlink(file.filePath, function (err) {
+      fs.unlink(file.url, function (err) {
         if (err) throw err;
         console.log('File deleted!');
       });

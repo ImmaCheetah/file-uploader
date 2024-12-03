@@ -9,7 +9,7 @@ const upload = multer({ dest: 'files/' })
 fileRouter.get('/download/:fileId', fileController.downloadFile);
 
 fileRouter.post('/:folderId', upload.single('file'), fileController.uploadFile);
-// fileRouter.post('/:folderId', upload.single('file'), fileController.uploadFile);
+fileRouter.post('/delete/:fileId', fileController.deleteFile);
 
 
 module.exports = fileRouter;

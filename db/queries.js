@@ -99,11 +99,19 @@ async function deleteFolder(folderId) {
   })
 }
 
-async function uploadFile(name, filePath, size, folderId, ownerId) {
+async function deleteFile(fileId) {
+  await prisma.file.delete({
+    where: {
+      id: fileId
+    }
+  })
+}
+
+async function uploadFile(name, url, size, folderId, ownerId) {
   const file = await prisma.file.create({
     data: {
       name: name,
-      filePath: filePath,
+      url: url,
       fileSize: size,
       folder: {
         connect: {
@@ -132,5 +140,6 @@ module.exports = {
   addFolder,
   updateFolder,
   deleteFolder,
-  uploadFile
+  uploadFile,
+  deleteFile
 }

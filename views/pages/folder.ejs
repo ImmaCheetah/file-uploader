@@ -27,6 +27,9 @@
             <td><%= file.fileSize %> Bytes</td>
             <td>
               <a href="/<%= file.filePath %>">Download</a>
+              <form action="/file/delete/<%= file.id %>" method="POST">
+                <button type="submit">Delete</button>
+              </form>
             </td>
           </tr>
         <% }) %>
