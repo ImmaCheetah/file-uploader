@@ -6,19 +6,20 @@ const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 const uploadFileToSupabase = async (bucketName, filePath, fileData) => {
-  try {
     const { data, error } = await supabase.storage
       .from(bucketName)
       .upload(filePath, fileData, {
         cacheControl: '3600',
         upsert: false
       });
+
+    if (error) {
+      console.log('Failed to upload', error)
+    } else {
+      console.log('Upload was successful')
       console.log(`File uploaded to ${filePath}`);
-      console.log(error)
       console.log(data)
-  } catch (error) {
-    throw error;
-  }
+    }
 };
 
 const getFileUrl = async (bucketName, filePath) => {
@@ -29,8 +30,23 @@ const getFileUrl = async (bucketName, filePath) => {
   console.log('SUPABASE FILE URL', data);
 }
 
+const downloadFile = async (bucketName, fileName) => {
+  const { data, error } = await supabase
+  .storage
+  .from(bucketName)
+  .download(`folder/files/${fileName}`)
+
+  if (error) {
+    console.log('Failed to download, error')
+  } else {
+    console.log('Downloaded successfully', data)
+  }
+
+}
+
 module.exports = {
   supabase,
   uploadFileToSupabase,
-  getFileUrl
+  getFileUrl,
+  downloadFile
 };

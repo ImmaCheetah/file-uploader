@@ -10,7 +10,9 @@ async function uploadFile(req, res, next) {
     const fileData = req.file.buffer; // Assign your file data to this variable
     
     supabase.uploadFileToSupabase('test', filePath, fileData);
-    supabase.getFileUrl('test', '4_1730666225096-dog.jpg');
+    supabase.getFileUrl('test', 'mircea-solomiea-3Oj0Ic-QPec-unsplash.jpg');
+
+    // supabase.downloadFile('test', 'mircea-solomiea-3Oj0Ic-QPec-unsplash.jpg')
 
 
     res.redirect(`/folder/${req.params.folderId}`);
