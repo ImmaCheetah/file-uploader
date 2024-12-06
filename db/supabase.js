@@ -5,11 +5,40 @@ const supabaseUrl = 'https://kxehdymjlydikmxcdbmd.supabase.co'
 const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-const uploadFileToSupabase = async (bucketName, filePath, fileData) => {
+const bucketExists = async (bucketName) => {
+  const { data, error } = await supabase
+    .storage
+    .getBucket(bucketName)
+  
+  if (data) {
+    console.log('BUCKET EXISTS')
+    return true;
+  } else {
+    console.log('BUCKET DOES NOT EXIST')
+    return false;
+  }
+}
+
+const createBucket = async (bucketName) => {
+  const { data, error } = await supabase.storage
+  .createBucket(bucketName, {
+    public: false,
+    fileSizeLimit: 5000000
+  })
+
+  if (error) {
+    console.log('Failed to create bucket', error)
+  } else {
+    console.log('Created bucket', data)
+  }
+}
+
+const uploadFileToSupabase = async (bucketName, filePath, fileData, fileType) => {
     const { data, error } = await supabase.storage
       .from(bucketName)
       .upload(filePath, fileData, {
         cacheControl: '3600',
+        contentType: fileType,
         upsert: false
       });
 
@@ -23,11 +52,16 @@ const uploadFileToSupabase = async (bucketName, filePath, fileData) => {
 };
 
 const getFileUrl = async (bucketName, filePath) => {
-  const { data } = supabase
+  const { data, error } = supabase
     .storage
     .from(bucketName)
     .getPublicUrl(filePath)
-  console.log('SUPABASE FILE URL', data);
+
+  if (error) {
+    console.log('Failed to get url', error);
+  } else {
+    return data.publicUrl;
+  }
 }
 
 const downloadFile = async (bucketName, fileName) => {
@@ -41,11 +75,12 @@ const downloadFile = async (bucketName, fileName) => {
   } else {
     console.log('Downloaded successfully', data)
   }
-
 }
 
 module.exports = {
   supabase,
+  bucketExists,
+  createBucket,
   uploadFileToSupabase,
   getFileUrl,
   downloadFile

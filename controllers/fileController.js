@@ -1,29 +1,40 @@
 const db = require('../db/queries');
 const supabase = require('../db/supabase');
+const { v4: uuidv4 } = require('uuid');
+const toArrayBuffer = require('../helper/toArrayBuffer');
 
 async function uploadFile(req, res, next) {
   try {
-    const {originalname, path, size} = req.file;
+    const userBucket = req.user.id;
+    const fileName = `${req.file.originalname} - ${uuidv4()}`;
+    const fileType = req.file.mimetype;
+    const filePath = `${userBucket}/folder/files/${fileName}`;
+    const fileData = req.file.buffer; 
+    const buffer = toArrayBuffer(fileData);
+    const bucketExists = await supabase.bucketExists(userBucket);
+    console.log('BUFFER', buffer);
     console.log('REQ FILE', req.file);
-    // const file = await db.uploadFile(originalname, path, size, req.params.folderId, req.user.id);
-    const filePath = `/folder/files/${originalname}`;
-    const fileData = req.file.buffer; // Assign your file data to this variable
+
+    if (!bucketExists) {
+      supabase.createBucket(userBucket);
+    } 
     
-    supabase.uploadFileToSupabase('test', filePath, fileData);
-    supabase.getFileUrl('test', 'mircea-solomiea-3Oj0Ic-QPec-unsplash.jpg');
+    supabase.uploadFileToSupabase(userBucket, filePath, buffer, fileType);
+    const fileUrl = await supabase.getFileUrl(userBucket, fileName);
 
-    // supabase.downloadFile('test', 'mircea-solomiea-3Oj0Ic-QPec-unsplash.jpg')
+    await db.uploadFile(req.file.originalname, fileUrl, req.file.size, req.params.folderId, req.user.id);
 
-
+    // supabase.downloadFile('test', 'Screenshot from 2024-12-03 15-09-10.png')
+    
     res.redirect(`/folder/${req.params.folderId}`);
-    // console.log('This is the file', file);
   } catch (error) {
     console.log(error);
   }
 }
 
 async function downloadFile(req, res, next) {
- 
+  console.log('HELOOOOO')
+  
 }
 
 async function deleteFile(req, res, next) {
