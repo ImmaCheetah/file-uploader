@@ -65,15 +65,24 @@ const getFileUrl = async (bucketName, filePath) => {
 }
 
 const downloadFile = async (bucketName, fileName) => {
+  // const { data, error } = await supabase
+  // .storage
+  // .from(bucketName)
+  // .download(`folder/files/${fileName}`)
+
   const { data, error } = await supabase
   .storage
   .from(bucketName)
-  .download(`folder/files/${fileName}`)
+  .createSignedUrl(`folder/files/${fileName}`, 2, {
+    download: true,
+  })
+
 
   if (error) {
-    console.log('Failed to download, error')
+    console.log('Failed to download', error)
   } else {
     console.log('Downloaded successfully', data)
+    return data.signedUrl;
   }
 }
 

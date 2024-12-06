@@ -107,11 +107,11 @@ async function deleteFile(fileId) {
   })
 }
 
-async function uploadFile(name, url, size, folderId, ownerId) {
+async function uploadFile(name, fileUuid, size, folderId, ownerId) {
   const file = await prisma.file.create({
     data: {
       name: name,
-      url: url,
+      fileUuid: fileUuid,
       fileSize: size,
       folder: {
         connect: {

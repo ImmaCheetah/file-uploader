@@ -6,9 +6,9 @@ const toArrayBuffer = require('../helper/toArrayBuffer');
 async function uploadFile(req, res, next) {
   try {
     const userBucket = req.user.id;
-    const fileName = `${req.file.originalname} - ${uuidv4()}`;
+    const fileName = `${req.file.originalname}-${uuidv4()}`;
     const fileType = req.file.mimetype;
-    const filePath = `${userBucket}/folder/files/${fileName}`;
+    const filePath = `folder/files/${fileName}`;
     const fileData = req.file.buffer; 
     const buffer = toArrayBuffer(fileData);
     const bucketExists = await supabase.bucketExists(userBucket);
@@ -20,9 +20,9 @@ async function uploadFile(req, res, next) {
     } 
     
     supabase.uploadFileToSupabase(userBucket, filePath, buffer, fileType);
-    const fileUrl = await supabase.getFileUrl(userBucket, fileName);
+    // const fileUrl = await supabase.getFileUrl(userBucket, fileName);
 
-    await db.uploadFile(req.file.originalname, fileUrl, req.file.size, req.params.folderId, req.user.id);
+    await db.uploadFile(req.file.originalname, fileName, req.file.size, req.params.folderId, req.user.id);
 
     // supabase.downloadFile('test', 'Screenshot from 2024-12-03 15-09-10.png')
     
@@ -33,8 +33,11 @@ async function uploadFile(req, res, next) {
 }
 
 async function downloadFile(req, res, next) {
-  console.log('HELOOOOO')
-  
+  const userBucket = req.user.id;
+  const fullFileName = req.params.fileId;
+  const downloadLink = await supabase.downloadFile(userBucket, fullFileName);
+
+  res.redirect(downloadLink);
 }
 
 async function deleteFile(req, res, next) {

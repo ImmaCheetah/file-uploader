@@ -35,7 +35,7 @@ model File {
   name        String
   folder      Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId    String
-  url         String
+  fileUuid    String
   fileSize    Int
   fileOwner   User     @relation(fields: [fileOwnerId], references: [id])
   fileOwnerId String

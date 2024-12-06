@@ -26,8 +26,7 @@
             <td><%= file.uploadedAt %></td>
             <td><%= file.fileSize %> Bytes</td>
             <td>
-              <a href="/file/download/<%= file.id %>">Download</a>
-              <a href="https://kxehdymjlydikmxcdbmd.supabase.co/storage/v1/object/sign/34bcbaaa-4970-416e-b704-07689cc7f031/34bcbaaa-4970-416e-b704-07689cc7f031/folder/files/4_1730666225096-dog.jpg%20-%208e88a39c-e886-4d3f-b9f4-d5820c5d08ab?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiIzNGJjYmFhYS00OTcwLTQxNmUtYjcwNC0wNzY4OWNjN2YwMzEvMzRiY2JhYWEtNDk3MC00MTZlLWI3MDQtMDc2ODljYzdmMDMxL2ZvbGRlci9maWxlcy80XzE3MzA2NjYyMjUwOTYtZG9nLmpwZyAtIDhlODhhMzljLWU4ODYtNGQzZi1iOWY0LWQ1ODIwYzVkMDhhYiIsImlhdCI6MTczMzUwNDIzMiwiZXhwIjoxNzMzNTkwNjMyfQ.KCBuAuGEqDwnMSi8c1O9ziFqMHWYmZY48TsfaDDoEaI&t=2024-12-06T16%3A57%3A12.184Z" download>TEST</a>
+              <a href="/file/download/<%= file.fileUuid %>">Download</a>
               <form action="/file/delete/<%= file.id %>" method="POST">
                 <button type="submit">Delete</button>
               </form>
