@@ -14,7 +14,24 @@
         <th>Owner</th>
         <th>Date</th>
         <th>Size</th>
+        <th>Action</th>
       </tr>
+      <% if (locals.files) { %>
+        <% files.forEach(file => { %>
+          <tr>
+            <td><%= file.name %></td>
+            <td><%= file.fileOwner.username %></td>
+            <td><%= file.uploadedAt %></td>
+            <td><%= file.fileSize %> Bytes</td>
+            <td>
+              <a href="/file/download/<%= file.fileUuid %>">Download</a>
+              <form action="/file/delete/<%= file.fileUuid %>" method="POST">
+                <button type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
     </table>
     <div class="modal">
       <form action="/folder/new" method="POST">

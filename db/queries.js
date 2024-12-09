@@ -16,9 +16,16 @@ async function getAllFiles(userId) {
       fileOwner: {
         id: userId
       }
+    },
+    include: {
+      fileOwner: {
+        select: {
+          username: true
+        }
+      }
     }
   });
-
+  
   return files;
 }
 
