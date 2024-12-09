@@ -65,18 +65,12 @@ const getFileUrl = async (bucketName, filePath) => {
 }
 
 const downloadFile = async (bucketName, fileName) => {
-  // const { data, error } = await supabase
-  // .storage
-  // .from(bucketName)
-  // .download(`folder/files/${fileName}`)
-
   const { data, error } = await supabase
   .storage
   .from(bucketName)
   .createSignedUrl(`folder/files/${fileName}`, 2, {
     download: true,
   })
-
 
   if (error) {
     console.log('Failed to download', error)
@@ -86,11 +80,23 @@ const downloadFile = async (bucketName, fileName) => {
   }
 }
 
+const deleteFile = async (bucketName, fileName) => {
+  const { data, error } = await supabase
+  .storage
+  .from(bucketName)
+  .remove([`folder/files/${fileName}`])
+
+  if (error) {
+    console.log('File not found', error);
+  } 
+}
+
 module.exports = {
   supabase,
   bucketExists,
   createBucket,
   uploadFileToSupabase,
   getFileUrl,
-  downloadFile
+  downloadFile,
+  deleteFile
 };

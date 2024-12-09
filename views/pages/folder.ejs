@@ -6,7 +6,7 @@
   <main>
     <h1><%= locals.folder.name %></h1>
     <button class="folder-update-btn">Update</button>
-    <form action="/file/<%= folder.id %>" method="POST" enctype="multipart/form-data">
+    <form action="/file/upload/<%= folder.id %>" method="POST" enctype="multipart/form-data">
       <input type="file" name="file">
       <button type="submit">Upload</button>
     </form>
@@ -27,7 +27,7 @@
             <td><%= file.fileSize %> Bytes</td>
             <td>
               <a href="/file/download/<%= file.fileUuid %>">Download</a>
-              <form action="/file/delete/<%= file.id %>" method="POST">
+              <form action="/file/delete/<%= file.fileUuid %>" method="POST">
                 <button type="submit">Delete</button>
               </form>
             </td>

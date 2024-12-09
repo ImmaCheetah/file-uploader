@@ -102,7 +102,7 @@ async function deleteFolder(folderId) {
 async function deleteFile(fileId) {
   await prisma.file.delete({
     where: {
-      id: fileId
+      fileUuid: fileId
     }
   })
 }

@@ -20,12 +20,9 @@ async function uploadFile(req, res, next) {
     } 
     
     supabase.uploadFileToSupabase(userBucket, filePath, buffer, fileType);
-    // const fileUrl = await supabase.getFileUrl(userBucket, fileName);
 
     await db.uploadFile(req.file.originalname, fileName, req.file.size, req.params.folderId, req.user.id);
 
-    // supabase.downloadFile('test', 'Screenshot from 2024-12-03 15-09-10.png')
-    
     res.redirect(`/folder/${req.params.folderId}`);
   } catch (error) {
     console.log(error);
@@ -41,10 +38,17 @@ async function downloadFile(req, res, next) {
 }
 
 async function deleteFile(req, res, next) {
-  console.log(req.params)
-  await db.deleteFile(req.params.fileId);
+  try {
+    const userBucket = req.user.id;
+    const fullFileName = req.params.fileId;
 
-  // res.redirect(`/folder/${req.params.folderId}`);
+    await db.deleteFile(fullFileName);
+    await supabase.deleteFile(userBucket, fullFileName);
+  
+    res.redirect('back');
+  } catch (error) {
+    console.log('Failed to delete file', error);
+  }
 }
 
 module.exports = {
