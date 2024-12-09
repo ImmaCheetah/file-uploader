@@ -7,7 +7,7 @@ loginRouter.get('/', loginController.getLoginPage);
 
 loginRouter.post('/', passport.authenticate('local', {
   failureRedirect: "/login",
-  // failureMessage: true,
+  failureMessage: true,
   successRedirect: "/"
 }));
 
