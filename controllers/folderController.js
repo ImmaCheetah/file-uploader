@@ -30,7 +30,7 @@ async function updateFolder(req, res, next) {
 
     await db.updateFolder(req.params.id, folderName)
 
-    res.redirect('/');
+    res.redirect(`/folder/${req.params.id}`);
   } catch (error) {
     console.log(error);
   }
