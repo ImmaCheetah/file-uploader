@@ -80,6 +80,16 @@ async function addFolder(name, ownerId) {
   return folder;
 }
 
+async function findUserByEmail(email) {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email
+    }
+  })
+  
+  return user;
+}
+
 async function updateFolder(folderId, newName) {
   await prisma.folder.update({
     where: {
@@ -137,6 +147,7 @@ module.exports = {
   getAllFilesInFolder,
   getFolder,
   addUser,
+  findUserByEmail,
   addFolder,
   updateFolder,
   deleteFolder,
