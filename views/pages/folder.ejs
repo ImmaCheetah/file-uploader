@@ -4,37 +4,22 @@
 <body>
   <%- include('../partials/sidebar') %>
   <main>
-    <h1><%= locals.folder.name %></h1>
-    <button class="folder-update-btn">Update</button>
-    <form action="/file/upload/<%= folder.id %>" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file">
+    <header>
+      <h1><%= locals.folder.name %></h1>
+      <button class="folder-update-btn">Update</button>
+    </header>
+    <form class="upload-form" action="/file/upload/<%= folder.id %>" method="POST" enctype="multipart/form-data">
+      <input class="file-btn" type="file" name="file">
       <button type="submit">Upload</button>
     </form>
-    <table>
-      <tr>
-        <th>File Name</th>
-        <th>Owner</th>
-        <th>Date</th>
-        <th>Size</th>
-        <th>Action</th>
-      </tr>
-      <% if (locals.files) { %>
-        <% files.forEach(file => { %>
-          <tr>
-            <td><%= file.name %></td>
-            <td><%= file.fileOwner.username %></td>
-            <td><%= file.uploadedAt %></td>
-            <td><%= file.fileSize %> Bytes</td>
-            <td>
-              <a href="/file/download/<%= file.fileUuid %>">Download</a>
-              <form action="/file/delete/<%= file.fileUuid %>" method="POST">
-                <button type="submit">Delete</button>
-              </form>
-            </td>
-          </tr>
-        <% }) %>
-      <% } %>
-    </table>
+    <% if (locals.errors) {%>
+      <ul>
+          <% errors.forEach(function(error) { %>
+          <li><%= error.msg %></li>
+          <% }); %>
+      </ul>
+    <% } %>
+    <%- include('../partials/table') %>
     <div class="modal">
       <form action="/folder/new" method="POST">
         <label for="folderName">Folder Name</label>

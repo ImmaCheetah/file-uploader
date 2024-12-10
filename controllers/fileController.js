@@ -3,8 +3,34 @@ const supabase = require('../db/supabase');
 const { v4: uuidv4 } = require('uuid');
 const toArrayBuffer = require('../helper/toArrayBuffer');
 
+const { body, validationResult } = require("express-validator");
+
+const validateFile = [
+  body('file').custom((value, { req }) => {
+      if (!req.file)
+        throw new Error("File is empty");
+        return true;
+    }).withMessage(`Please select a file before uploading`),
+]
+
 async function uploadFile(req, res, next) {
   try {
+    const errors = validationResult(req);
+    console.log('AAAAAAAAAAAAAAAAAA',errors)
+    // if (!errors.isEmpty()) {
+    //   return res
+    //   .status(400)
+    //   .render(`/folder/${req.params.folderId}`, {
+    //       param: req.params,
+    //       title: 'Folder', 
+    //       errors: errors.array()
+    //   })
+    // }
+
+    if (!errors.isEmpty()) {
+      res.redirect(`/folder/${req.params.folderId}`)
+    }
+    
     const userBucket = req.user.id;
     const fileName = `${req.file.originalname}-${uuidv4()}`;
     const fileType = req.file.mimetype;
@@ -14,6 +40,7 @@ async function uploadFile(req, res, next) {
     const bucketExists = await supabase.bucketExists(userBucket);
     console.log('BUFFER', buffer);
     console.log('REQ FILE', req.file);
+
 
     if (!bucketExists) {
       supabase.createBucket(userBucket);
@@ -54,5 +81,6 @@ async function deleteFile(req, res, next) {
 module.exports = {
   uploadFile,
   downloadFile,
-  deleteFile
+  deleteFile,
+  validateFile
 }

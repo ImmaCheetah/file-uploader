@@ -39,12 +39,12 @@ async function updateFolder(req, res, next) {
 async function deleteFolder(req, res, next) {
   try {
     const filesToDelete = await db.getAllFilesInFolder(req.user.id, req.body.folderId);
-    filesToDelete.forEach((file) => {
-      fs.unlink(file.url, function (err) {
-        if (err) throw err;
-        console.log('File deleted!');
-      });
-    })
+    // filesToDelete.forEach((file) => {
+    //   fs.unlink(file.url, function (err) {
+    //     if (err) throw err;
+    //     console.log('File deleted!');
+    //   });
+    // })
     await db.deleteFolder(req.body.folderId);
 
     res.redirect('/');
