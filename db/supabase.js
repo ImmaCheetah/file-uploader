@@ -47,7 +47,6 @@ const uploadFileToSupabase = async (bucketName, filePath, fileData, fileType) =>
     } else {
       console.log('Upload was successful')
       console.log(`File uploaded to ${filePath}`);
-      console.log(data)
     }
 };
 

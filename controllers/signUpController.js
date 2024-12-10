@@ -43,7 +43,6 @@ async function createUser(req, res, next) {
   try {
     const {username, email, password} = req.body;
     const errors = validationResult(req);
-    console.log(username, email, password)
 
     // check for errors and render page 
     // with errors and name fields
@@ -72,7 +71,7 @@ async function createUser(req, res, next) {
     });
     res.redirect('/login');
   } catch (error) {
-    console.log(error);
+    next(new Error ('Failed to create user'))
   }
 }
 

@@ -1,15 +1,18 @@
 const db = require('../db/queries');
 
 async function getIndexPage(req, res, next) {
-  if (!req.user) {
-    res.redirect('/login')
-  } else {
-    const folders = await db.getAllFolders(req.user.id);
-    const files = await db.getAllFiles(req.user.id);
-    console.log(files);
-    res.render('index', {folders: folders, files: files});
+  try {
+    if (!req.user) {
+      res.redirect('/login')
+    } else {
+      const folders = await db.getAllFolders(req.user.id);
+      const files = await db.getAllFiles(req.user.id);
+      console.log(files);
+      res.render('index', {folders: folders, files: files});
+    }
+  } catch (error) {
+    next(new Error ('Could not get home page'))
   }
-  // console.log(req.session);
 }
 
 function getLogout(req, res, next) {

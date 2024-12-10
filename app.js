@@ -9,6 +9,8 @@ const express = require('express');
 const passport = require('passport');
 const path = require("node:path");
 
+const CustomError = require("./helper/CustomError");
+
 // Prisma session store packages
 const expressSession = require('express-session');
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
@@ -75,6 +77,17 @@ app.use("/login", loginRouter);
 app.use("/sign-up", signUpRouter);
 app.use("/folder", folderRouter);
 app.use("/file", fileRouter);
+
+app.use((req, res, next) => {
+  next(
+      new CustomError('Page Not Found', 'The page you are looking for does not exist', 404)
+  )
+})
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.statusCode || 500).render('error', {error: err});
+});
 
 app.listen(process.env.PORT, () => console.log('App running on port', PORT));
 

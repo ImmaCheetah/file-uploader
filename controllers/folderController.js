@@ -8,7 +8,7 @@ async function getFolderPage(req, res, next) {
 
     res.render('folder', {folder: folder, files: files})
   } catch (error) {
-    console.log(error);
+    next(new Error ('Failed to load folder'))
   }
 }
 
@@ -20,7 +20,7 @@ async function createFolder(req, res, next) {
 
     res.redirect('/');
   } catch (error) {
-    console.log(error);
+    next(new Error ('Failed to create folder'))
   }
 }
 
@@ -32,7 +32,7 @@ async function updateFolder(req, res, next) {
 
     res.redirect(`/folder/${req.params.id}`);
   } catch (error) {
-    console.log(error);
+    next(new Error ('Failed to update folder name'))
   }
 }
 
@@ -49,7 +49,7 @@ async function deleteFolder(req, res, next) {
 
     res.redirect('/');
   } catch (error) {
-    console.log(error);
+    next(new Error ('Failed to delete folder'))
   }
 }
 
