@@ -11,7 +11,12 @@ const validateFile = [
       if (!req.file) throw new Error("File is empty");
       return true;
     })
-    .withMessage(`Please select a file before uploading`),
+    .withMessage(`Please select a file before uploading`)
+    .custom((value, { req }) => {
+      if (req.file.size > 5000000) throw new Error("File is too big");
+      return true;
+    })
+    .withMessage(`File is too big`),
 ];
 
 async function uploadFile(req, res, next) {
