@@ -11,14 +11,14 @@
     <form class="upload-form" action="/file/upload/<%= folder.id %>" method="POST" enctype="multipart/form-data">
       <input class="file-btn" type="file" name="file">
       <button type="submit">Upload</button>
+      <% if (locals.errors) {%>
+        <ul>
+            <% errors.forEach(function(error) { %>
+            <li><%= error.msg %></li>
+            <% }); %>
+        </ul>
+      <% } %>
     </form>
-    <% if (locals.errors) {%>
-      <ul>
-          <% errors.forEach(function(error) { %>
-          <li><%= error.msg %></li>
-          <% }); %>
-      </ul>
-    <% } %>
     <%- include('../partials/table') %>
     <div class="modal">
       <form action="/folder/new" method="POST">

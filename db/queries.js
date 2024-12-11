@@ -1,10 +1,10 @@
-const prisma = require('./prisma');
+const prisma = require("./prisma");
 
 async function getAllFolders(userId) {
   const folders = await prisma.folder.findMany({
     where: {
-      ownerId: userId
-    }
+      ownerId: userId,
+    },
   });
 
   return folders;
@@ -14,18 +14,18 @@ async function getAllFiles(userId) {
   const files = await prisma.file.findMany({
     where: {
       fileOwner: {
-        id: userId
-      }
+        id: userId,
+      },
     },
     include: {
       fileOwner: {
         select: {
-          username: true
-        }
-      }
-    }
+          username: true,
+        },
+      },
+    },
   });
-  
+
   return files;
 }
 
@@ -33,17 +33,17 @@ async function getAllFilesInFolder(userId, folderId) {
   const files = await prisma.file.findMany({
     where: {
       folder: {
-        id: folderId
+        id: folderId,
       },
-      fileOwnerId: userId
+      fileOwnerId: userId,
     },
     include: {
       fileOwner: {
         select: {
-          username: true
-        }
-      }
-    }
+          username: true,
+        },
+      },
+    },
   });
 
   return files;
@@ -53,8 +53,8 @@ async function getFolder(userId, folderId) {
   const folder = await prisma.folder.findFirst({
     where: {
       id: folderId,
-      ownerId: userId
-    }
+      ownerId: userId,
+    },
   });
 
   return folder;
@@ -66,8 +66,8 @@ async function addUser(username, email, password) {
       username: username,
       email: email,
       password: password,
-    }
-  })
+    },
+  });
 
   return user;
 }
@@ -78,11 +78,11 @@ async function addFolder(name, ownerId) {
       name: name,
       owner: {
         connect: {
-          id: ownerId
-        }
-      } 
-    }
-  })
+          id: ownerId,
+        },
+      },
+    },
+  });
 
   return folder;
 }
@@ -90,38 +90,38 @@ async function addFolder(name, ownerId) {
 async function findUserByEmail(email) {
   const user = await prisma.user.findFirst({
     where: {
-      email: email
-    }
-  })
-  
+      email: email,
+    },
+  });
+
   return user;
 }
 
 async function updateFolder(folderId, newName) {
   await prisma.folder.update({
     where: {
-      id: folderId
+      id: folderId,
     },
     data: {
       name: newName,
-    }
-  })
+    },
+  });
 }
 
 async function deleteFolder(folderId) {
   const deleteFolder = await prisma.folder.delete({
     where: {
       id: folderId,
-    }
-  })
+    },
+  });
 }
 
 async function deleteFile(fileId) {
   await prisma.file.delete({
     where: {
-      fileUuid: fileId
-    }
-  })
+      fileUuid: fileId,
+    },
+  });
 }
 
 async function uploadFile(name, fileUuid, size, folderId, ownerId) {
@@ -132,19 +132,19 @@ async function uploadFile(name, fileUuid, size, folderId, ownerId) {
       fileSize: size,
       folder: {
         connect: {
-          id: folderId
-        }
+          id: folderId,
+        },
       },
       fileOwner: {
         connect: {
-          id: ownerId
-        }
+          id: ownerId,
+        },
       },
     },
     include: {
-      fileOwner: true
-    }
-  })
+      fileOwner: true,
+    },
+  });
   return file;
 }
 
@@ -159,5 +159,5 @@ module.exports = {
   updateFolder,
   deleteFolder,
   uploadFile,
-  deleteFile
-}
+  deleteFile,
+};
