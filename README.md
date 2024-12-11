@@ -24,7 +24,6 @@ $ cd file-uploader
 $ npm install
 $ npm prisma migrate dev
 $ npm run start
-
 ```
 
 ## Learning Outcomes
