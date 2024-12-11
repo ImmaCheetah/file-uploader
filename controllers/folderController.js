@@ -1,5 +1,6 @@
 const db = require("../db/queries");
 const fs = require("fs");
+const { supabase } = require("../db/supabase");
 
 async function getFolderPage(req, res, next) {
   try {
@@ -38,10 +39,20 @@ async function updateFolder(req, res, next) {
 
 async function deleteFolder(req, res, next) {
   try {
+    const userBucket = req.user.id;
     const filesToDelete = await db.getAllFilesInFolder(
       req.user.id,
       req.body.folderId,
     );
+    
+    filesToDelete.forEach(async (file) => {
+      console.log('FILES IN FOR EACH', file.fileUuid);
+      const { data, error } = await supabase
+        .storage
+        .from(userBucket)
+        .remove([`folder/files/${file.fileUuid}`])
+    })
+
     // filesToDelete.forEach((file) => {
     //   fs.unlink(file.url, function (err) {
     //     if (err) throw err;

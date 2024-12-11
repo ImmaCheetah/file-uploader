@@ -92,5 +92,5 @@ module.exports = {
   uploadFileToSupabase,
   getFileUrl,
   downloadFile,
-  deleteFile,
+  deleteFile
 };
